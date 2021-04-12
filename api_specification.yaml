@@ -1,0 +1,207 @@
+swagger: "2.0"
+info:
+  description: "〇〇PJ"
+  version: "1.0.0"
+  title: "〇〇PJ"
+host: "address_book.swagger.io"
+basePath: "/v1"
+tags:
+- name: "address_book"
+  description: "CRUD of address_book"
+schemes:
+- "https"
+- "http"
+paths:
+  /prefectures:
+    get:
+      tags:
+        - "address_book"
+      summary: "get prefecture list"
+      description: "get all prefecture list from Prefecture Model."
+      operationId: "findPrefectures"
+      consumes:
+      - "application/xml"
+      - "application/json"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Prefecture"
+        "422":
+          description: "There is no prefecture info"
+  /municipalities:
+    get:
+      tags:
+        - "address_book"
+      summary: "get municipality list"
+      description: "get municipality list from Municipality Model"
+      operationId: "findMunicipalities"
+      consumes:
+      - "application/xml"
+      - "application/json"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Municipality"
+        "422":
+          description: "There is no municipality info"
+  /address:
+    post:
+      tags:
+      - "address_book"
+      summary: "Add a new address to the address_book"
+      description: ""
+      operationId: "addAddress"
+      consumes:
+      - "application/xml"
+      - "application/json"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Address object that needs to be added to the address book"
+        required: true
+        schema:
+          $ref: "#/definitions/AddressBook"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/AddressBook"
+        "405":
+          description: "Invalid input"
+        "422":
+          description: "Duplicate target data"
+      security:
+      - address_book_auth:
+        - "write:addresses"
+        - "read:addresses"
+    put:
+      tags:
+      - "address_book"
+      summary: "Update an existing address"
+      description: ""
+      operationId: "updateAddress"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Address object that you want to change"
+        required: true
+        schema:
+          $ref: "#/definitions/AddressBook"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/AddressBook"
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Address not found"
+        "405":
+          description: "Validation exception"
+      security:
+      - address_book_auth:
+        - "write:addresses"
+        - "read:addresses"
+  /address/findByPostalCode:
+    get:
+      tags:
+      - "address_book"
+      summary: "Finds Address by postal code"
+      description: "a postal code value can be provided to find address"
+      operationId: "findByPostalCode"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "postal_code"
+        in: "query"
+        description: "Postal code value that need to find address"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/AddressBookResult"
+        "400":
+          description: "Invalid postal code"
+        "404":
+          description: "Address not found"
+      security:
+      - address_book_auth:
+        - "write:addresses"
+        - "read:addresses"
+securityDefinitions:
+  address_book_auth:
+    type: "oauth2"
+    authorizationUrl: "http://address_book.swagger.io/oauth/dialog"
+    flow: "implicit"
+    scopes:
+      write:addresses: "modify address in your account"
+      read:addresses: "read your address"
+definitions:
+  AddressBook:
+    type: "object"
+    properties: 
+      id: 
+        type: "integer"
+        format: "int64"
+      postalCode:
+        type: "string"
+      detailAddress:
+        type: "string"
+      prefectureId:
+        type: "integer"
+        format: "int64"
+      municipalityId:
+        type: "integer"
+        format: "int64"
+  AddressBookResult:
+    type: "object"
+    properties: 
+      id: 
+        type: "integer"
+        format: "int64"
+      postalCode:
+        type: "string"
+      detailAddress:
+        type: "string"
+      prefectureName:
+        type: "string"
+      municipalityName:
+        type: "string"
+  Prefecture:
+    type: "object"
+    properties:
+      prefectureId: 
+        type: "integer"
+        format: "int64"
+      prefectureName: 
+        type: "string"
+  Municipality:
+    type: "object"
+    properties:
+      municipalityId:
+        type: "integer"
+        format: "int64"
+      municipalityName:
+        type: "string"
