@@ -1,5 +1,5 @@
 ## API Specification Sample
-[sample yaml](/sample.yaml)
+[sample yaml](sample.yaml)
 
 ## API Online tool (SwaggerEditor)
 https://editor.swagger.io/
