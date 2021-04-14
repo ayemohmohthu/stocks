@@ -34,6 +34,8 @@ paths:
               $ref: "#/definitions/Prefecture"
         "422":
           description: "There is no prefecture info"
+        "500":
+          description: "System Error has occured"
   /municipalities:
     get:
       tags:
@@ -56,6 +58,8 @@ paths:
               $ref: "#/definitions/Municipality"
         "422":
           description: "There is no municipality info"
+        "500":
+          description: "System Error has occured"
   /address:
     post:
       tags:
@@ -85,6 +89,8 @@ paths:
           description: "Invalid input"
         "422":
           description: "Duplicate target data"
+        "500":
+          description: "System Error has occured"
       security:
       - address_book_auth:
         - "write:addresses"
@@ -117,6 +123,8 @@ paths:
           description: "Address not found"
         "405":
           description: "Validation exception"
+        "500":
+          description: "System Error has occured"
       security:
       - address_book_auth:
         - "write:addresses"
@@ -146,6 +154,8 @@ paths:
           description: "Invalid postal code"
         "404":
           description: "Address not found"
+        "500":
+          description: "System Error has occured"
       security:
       - address_book_auth:
         - "write:addresses"
