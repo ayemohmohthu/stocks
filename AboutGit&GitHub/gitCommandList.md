@@ -1,9 +1,3 @@
----
-title: Gitコマンド一覧
-tags: Git
-author: fukumone
-slide: false
----
 #作業ディレクトリにGitを使う宣言をする
 
 ```
