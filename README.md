@@ -34,6 +34,6 @@
 ### Phpについて
 [インストール](AboutPhp/installation.md)
 
-[バージョンアップ方法](AboutPhp/up.md)
+[バージョンアップ方法](AboutPhp/version_up.md)
 
 [DockerPhpLaravelMySqlサンプル](https://github.com/seattleconsulting/pjbase-laravel)
